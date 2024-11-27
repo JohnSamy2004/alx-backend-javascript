@@ -58,17 +58,13 @@ app.get('/students', (_, res) => {
       responseParts.push(report);
       const responseText = responseParts.join('\n');
       res.setHeader('Content-Type', 'text/plain');
-      res.setHeader('Content-Length', responseText.length);
-      res.statusCode = 200;
-      res.write(Buffer.from(responseText));
+      res.status(200).send(responseText);
     })
     .catch((err) => {
-      responseParts.push(err instanceof Error ? err.message : err.toString());
+      responseParts.push(err.message);
       const responseText = responseParts.join('\n');
       res.setHeader('Content-Type', 'text/plain');
-      res.setHeader('Content-Length', responseText.length);
-      res.statusCode = 200;
-      res.write(Buffer.from(responseText));
+      res.status(500).send(responseText);
     });
 });
 
